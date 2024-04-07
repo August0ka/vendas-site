@@ -17,7 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run() {
 
-        User::updateOrInsert([
+        User::updateOrCreate(
+        [
+            'id' => 1,
+        ],
+        [
+            'id' => 1,
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('123'),
@@ -54,7 +59,6 @@ class DatabaseSeeder extends Seeder
                 'quantity' => 20,
                 'main_image' => 'camiseta.jpg',
             ],
-            // Adicione mais produtos conforme necessário
         ];
 
         // Adicionar os produtos ao banco de dados

@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Models\ProductImage;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $products = Product::all();
@@ -20,11 +17,6 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::pluck('name', 'id');
@@ -32,56 +24,95 @@ class ProductController extends Controller
         return view('products.form', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->except('_token');
 
-        Product::create($data);
+        if ($request->hasFile('main_image')) {
+            $randomize = rand(111111, 999999);
+            $extension = $request->file('main_image')->getClientOriginalExtension();
+            $filename = $randomize . '.' . $extension;
+            Storage::disk('public')->put('images/' . $filename, file_get_contents($request->file('main_image')));
+            $data['main_image'] = $filename;
+
+        }
+
+        $product = Product::create($data);
+
+
+        if($request->hasFile('multiple_images')) {
+            
+            $multipleImages = $data['multiple_images'];
+
+            foreach ($multipleImages as $image) {
+                $randomize = rand(111111, 999999);
+                $extension = $image->getClientOriginalExtension();
+                $filename = $randomize . '.' . $extension;
+                Storage::disk('public')->put('images/' . $filename, file_get_contents($image));
+                
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image'      => $filename
+                ]);
+            }
+        }
+
 
         return redirect()->route('products.index')->with('success', 'Produto criado com sucesso!');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
     public function edit(Product $product)
     {
+        $productImages = ProductImage::where('product_id', $product->id)->pluck('image', 'id');
         $categories = Category::pluck('name', 'id');
 
-        return view('products.form', compact('product', 'categories'));
+        return view('products.form', compact('product', 'categories', 'productImages'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $data = $request->except('_token', '_method');
+
+        if ($request->hasFile('main_image')) {
+            $randomize = rand(111111, 999999);
+            $extension = $request->file('main_image')->getClientOriginalExtension();
+            $filename = $randomize . '.' . $extension;
+            Storage::disk('public')->put('images/' . $filename, file_get_contents($request->file('main_image')));
+            $data['main_image'] = $filename;
+
+        }
+
+        if($request->hasFile('multiple_images')) {
+            ProductImage::where('product_id', $product->id)->delete();
+
+            $multipleImages = $data['multiple_images'];
+
+            foreach ($multipleImages as $image) {
+                $randomize = rand(111111, 999999);
+                $extension = $image->getClientOriginalExtension();
+                $filename = $randomize . '.' . $extension;
+                Storage::disk('public')->put('images/' . $filename, file_get_contents($image));
+                
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image'      => $filename
+                ]);
+            }
+        }
+
+
+        $product->update($data);
+
+        return redirect()->route('products.index')->with('success', 'Produto atualizado com sucesso!');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Produto deletado com sucesso!');
     }
+
 }

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Produtos</h1>
+    <h1>Categorias</h1>
 
     @if (session('success'))
     <div class="alert alert-success">
@@ -10,44 +10,41 @@
     </div>
     @endif
 
-    <a href="{{ route('products.create') }}" class="btn btn-primary">Novo Produto</a>
+    <a href="{{ route('categories.create') }}" class="btn btn-primary">Nova Categoria</a>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Nome</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Ações</th>
+
             </tr>
         </thead>
         <tbody>
-            @foreach($products as $product)
+            @foreach($categories as $category)
             <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->price }}</td>
-                <td>{{ $product->quantity }}</td>
+                <td>{{ $category->id }}</td>
+                <td>{{ $category->name }}</td>
+
                 <td>
-                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Editar</a>
+                    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">Editar</a>
                     
                     <button type="button" class="btn btn-danger delete-button"
-                        data-button-modal="{{$product->id}}">Excluir</button>
+                        data-button-modal="{{$category->id}}">Excluir</button>
                 </td>
             </tr>
-            <!-- Delete Product Modal -->
-            <div class="modal fade" id="deleteModal{{$product->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline;">
+            <!-- Delete Category Modal -->
+            <div class="modal fade" id="deleteModal{{$category->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display: inline;">
                 @csrf
                 @method('DELETE')
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Excluir produto</h5>
+                                <h5 class="modal-title" id="deleteModalLabel">Excluir categoria</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Deseja remover <strong>{{ $product->name }}</strong> ?</p>
+                                <p>Deseja remover a categoria <strong>{{ $category->name }}</strong> ?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Não</button>
@@ -68,9 +65,9 @@
 <script>
     $(document).ready(function () {
         $('.delete-button').on('click', function () {
-            let productId = $(this).data('button-modal');
-            
-            $(`#deleteModal${productId}`).modal('show');
+            let categoryId = $(this).data('button-modal');
+
+            $(`#deleteModal${categoryId}`).modal('show');
         });
     });
 </script>
