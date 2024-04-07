@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,8 +15,51 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        // \App\Models\User::factory(10)->create();
+    public function run() {
+
+        User::updateOrInsert([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('123'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);    
+
+        $categories = [
+            ['name' => 'Eletrônicos'],
+            ['name' => 'Roupas'],
+            ['name' => 'Acessórios'],
+            ['name' => 'Alimentos'],
+            ['name' => 'Casa e Jardim'],
+        ];
+
+        foreach ($categories as $category) {
+            Category::updateOrInsert($category);
+        }
+
+        $products = [
+            [
+                'name' => 'Smartphone',
+                'description' => 'Um smartphone de última geração.',
+                'price' => 999.99,
+                'category_id' => 1,
+                'quantity' => 10,
+                'main_image' => 'smartphone.jpg',
+            ],
+            [
+                'name' => 'Camiseta',
+                'description' => 'Uma camiseta confortável e estilosa.',
+                'price' => 29.99,
+                'category_id' => 2,
+                'quantity' => 20,
+                'main_image' => 'camiseta.jpg',
+            ],
+            // Adicione mais produtos conforme necessário
+        ];
+
+        // Adicionar os produtos ao banco de dados
+        foreach ($products as $product) {
+            Product::updateOrInsert($product);
+        }
     }
 }

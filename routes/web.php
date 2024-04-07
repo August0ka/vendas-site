@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductController; 
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::post('/login/auth', [LoginController::class, 'login'])->name('login.auth');
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+
+Route::resource('products', ProductController::class)->names([
+    'index' => 'products.index',
+    'create' => 'products.create',
+    'store' => 'products.store',
+    'edit' => 'products.edit',
+    'update' => 'products.update',
+    'destroy' => 'products.destroy',
+]);
