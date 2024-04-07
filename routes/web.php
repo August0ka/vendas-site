@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::post('/login/auth', [LoginController::class, 'login'])->name('login.auth');
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('products', ProductController::class)->names([
     'index'   => 'products.index',
