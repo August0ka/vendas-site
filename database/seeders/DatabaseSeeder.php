@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Admin;
 use App\Models\User;
 
 class DatabaseSeeder extends Seeder
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run() {
 
-        User::updateOrCreate(
+        Admin::updateOrCreate(
         [
             'id' => 1,
         ],
@@ -25,6 +26,19 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'name' => 'admin',
             'email' => 'admin@admin.com',
+            'password' => Hash::make('123'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);    
+
+        User::updateOrCreate(
+        [
+            'id' => 1,
+        ],
+        [
+            'id' => 1,
+            'name' => 'Goku',
+            'email' => 'goku@user.com',
             'password' => Hash::make('123'),
             'created_at' => now(),
             'updated_at' => now(),

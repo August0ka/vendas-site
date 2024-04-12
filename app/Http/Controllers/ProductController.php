@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductImage;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -14,14 +15,14 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
-        return view('products.index', compact('products'));
+        return view('admin.products.index', compact('products'));
     }
 
     public function create()
     {
         $categories = Category::pluck('name', 'id');
 
-        return view('products.form', compact('categories'));
+        return view('admin.products.form', compact('categories'));
     }
 
     public function store(Request $request)
@@ -67,7 +68,7 @@ class ProductController extends Controller
         $productImages = ProductImage::where('product_id', $product->id)->pluck('image', 'id');
         $categories = Category::pluck('name', 'id');
 
-        return view('products.form', compact('product', 'categories', 'productImages'));
+        return view('admin.products.form', compact('product', 'categories', 'productImages'));
     }
 
     public function update(Request $request, Product $product)
@@ -113,6 +114,15 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index')->with('success', 'Produto deletado com sucesso!');
+    }
+
+    public function purchase(Product $product) {
+
+        $categories = Category::all();
+
+        $user = Auth::user();
+
+        return view('site.product.purchase', compact('product', 'categories', 'user'));
     }
 
 }

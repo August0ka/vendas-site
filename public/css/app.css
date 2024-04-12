@@ -1,0 +1,25 @@
+.thead-color {
+  background-color: #007bff;
+  color: white
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container-fluid {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebarMenu {
+  height: 100vh;
+}
+
+#sidebarMenu .mt-auto {
+  padding-top: 20px; 
+  border-top: 1px solid #ddd;
+}

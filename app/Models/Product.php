@@ -17,4 +17,8 @@ class Product extends Model
         'quantity',
         'main_image',
     ];
+
+    protected $searchable = [
+        'name',
+    ];
 }
