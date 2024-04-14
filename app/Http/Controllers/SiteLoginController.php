@@ -27,7 +27,7 @@ class SiteLoginController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
+            'login_errors' => 'Email ou senha incorretos.',
         ]);
     }
 
@@ -39,6 +39,6 @@ class SiteLoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('site.login.index');
+        return redirect()->route('site.home');
     }
 }

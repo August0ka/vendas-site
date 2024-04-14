@@ -49,7 +49,7 @@
             <div class="row mt-2">
                 <div class="col-2">
                     <label for="price" class="form-label">Valor</label>
-                    <input type="number" class="form-control" id="price" name="price" value="{{ isset($product) ? $product->price : '' }}" step="0.01" required>
+                    <input type="text" class="form-control" id="price" name="price" value="{{ isset($product) ? $product->price : '' }}" step="0.01" required>
                 </div>      
                 <div class="col-2">
                     <label for="quantity" class="form-label">Quantidade</label>
@@ -81,18 +81,12 @@
 
 
 @endsection
-<!-- @section('scripts')
-    <script>
 
-    function previewImage(event) {
-        let output = document.getElementById('output');
-        console.log(event.target);
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-            URL.revokeObjectURL(output.src)
-        }
-    };
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#price').mask("#.##0,00", {reverse: true});
+    })
+</script>
 
-    </script>
-
-@endsection -->
+@endsection

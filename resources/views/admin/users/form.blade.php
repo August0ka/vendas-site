@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-6">
                     <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" value="{{ isset($user) ? $user->email : '' }}" required>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ isset($user) ? $user->email : '' }}" required>
                 </div>
                 <div class="col-4">
                     <label for="password">Senha</label>
@@ -63,18 +63,11 @@
 
 
 @endsection
-<!-- @section('scripts')
-    <script>
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#cpf').mask('000.000.000-00');
+    })
+</script>
 
-    function previewImage(event) {
-        let output = document.getElementById('output');
-        console.log(event.target);
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-            URL.revokeObjectURL(output.src)
-        }
-    };
-
-    </script>
-
-@endsection -->
+@endsection

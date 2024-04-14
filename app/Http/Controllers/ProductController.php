@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\ProductImage;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Sale;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::orderBy('id')->get();
 
         return view('admin.products.index', compact('products'));
     }
@@ -29,6 +30,11 @@ class ProductController extends Controller
     {
         $data = $request->except('_token');
 
+        if ($data['price']) {
+            $data['price'] = str_replace('.', '', $data['price']);
+            $data['price'] = str_replace(',', '.', $data['price']);
+        }
+
         if ($request->hasFile('main_image')) {
             $randomize = rand(111111, 999999);
             $extension = $request->file('main_image')->getClientOriginalExtension();
@@ -39,7 +45,6 @@ class ProductController extends Controller
         }
 
         $product = Product::create($data);
-
 
         if($request->hasFile('multiple_images')) {
             
@@ -74,6 +79,11 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $request->except('_token', '_method');
+
+        if ($data['price']) {
+            $data['price'] = str_replace('.', '', $data['price']);
+            $data['price'] = str_replace(',', '.', $data['price']);
+        }
 
         if ($request->hasFile('main_image')) {
             $randomize = rand(111111, 999999);
@@ -123,6 +133,26 @@ class ProductController extends Controller
         $user = Auth::user();
 
         return view('site.product.purchase', compact('product', 'categories', 'user'));
+    }
+
+    public function finalizePurchase( Product $product, Request $request) {
+        $purchaseDetails = $request->except('_token');
+        if($purchaseDetails['total']) {
+            $purchaseDetails['total'] = str_replace('R$', '', $purchaseDetails['total']);
+            $purchaseDetails['total'] = str_replace(',', '.', $purchaseDetails['total']);
+        }
+        
+        $categories = Category::all();
+
+        Sale::create([
+            'user_id'    => Auth::user()->id,
+            'product_id' => $product->id,
+            'quantity'   => $purchaseDetails['quantity'],
+            'total'      => $purchaseDetails['total'],
+        ]);
+
+
+        return view('site.product.confirmPurchase', compact('categories'));
     }
 
 }

@@ -13,6 +13,7 @@ class Sale extends Model
         'user_id',
         'product_id',
         'quantity',
-        'total'
+        'total',
+        'created_at',
     ];
 }

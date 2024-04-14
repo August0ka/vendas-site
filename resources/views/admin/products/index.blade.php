@@ -6,7 +6,7 @@
         <h3>Produtos</h1>
     </div>
     
-    <div class="mt-2 d-flex justify-content-end ">
+    <div class="mt-2 mb-2 d-flex justify-content-end ">
         <a href="{{ route('products.create') }}" class="btn btn-primary">Novo Produto</a>
     </div> 
 
@@ -16,7 +16,7 @@
     </div>
     @endif
 
-    <div class="table-responsive card rounded-3 p-0 m-0 mt-5">
+    <div class="table-responsive shadow card rounded-3 p-0 m-0 mt-5">
         <table class="table table-bordered rounded-3 border overflow-hidden p-0 m-0">
             <thead>
                 <tr>
@@ -32,7 +32,7 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->price }}</td>
+                    <td>{{ 'R$ ' . number_format($product->price, 2, ',', '.') }}</td>
                     <td>{{ $product->quantity }}</td>
                     <td>
                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-info btn-sm"

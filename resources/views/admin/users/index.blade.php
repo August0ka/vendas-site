@@ -5,7 +5,7 @@
     <div class="mt-5">
         <h3>Usuários</h1>
     </div>
-    <div class="mt-2 d-flex justify-content-end ">
+    <div class="mt-2 mb-2 d-flex justify-content-end ">
         <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Usuário</a>
     </div>
 
@@ -15,7 +15,7 @@
     </div>
     @endif
 
-    <div class="table-responsive card rounded-3 p-0 m-0 mt-5">
+    <div class="table-responsive shadow card rounded-3 p-0 m-0 mt-5">
         <table class="table table-bordered rounded-3 border overflow-hidden p-0 m-0">
             <thead>
                 <tr>
@@ -35,11 +35,11 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->cpf }}</td>
+                    <td style="white-space: nowrap;">{{ $user->cpf }}</td>
                     <td>{{ $user->state }}</td>
                     <td>{{ $user->city }}</td>
                     <td>{{ $user->address }}</td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm"
                             data-bs-toggle="tooltip" 
                             data-bs-placement="top" 

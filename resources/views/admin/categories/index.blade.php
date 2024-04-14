@@ -5,8 +5,8 @@
     <div class="mt-5">
         <h3>Categorias</h3>
     </div>
-    <div class="mt-2 d-flex justify-content-end ">
-        <a href="{{ route('categories.create') }}" class="btn btn-primary">Novo Produto</a>
+    <div class="mt-2 mb-2 d-flex justify-content-end ">
+        <a href="{{ route('categories.create') }}" class="btn btn-primary">Nova Categoria</a>
     </div> 
 
     @if (session('success'))
@@ -15,7 +15,7 @@
     </div>
     @endif
     
-    <div class="table-responsive card rounded-3 p-0 m-0 mt-5">
+    <div class="table-responsive shadow card rounded-3 p-0 m-0 mt-5">
         <table class="table table-bordered rounded-3 border overflow-hidden p-0 m-0">
             <thead>
                 <tr>

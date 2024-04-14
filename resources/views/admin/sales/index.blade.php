@@ -12,7 +12,7 @@
     </div>
     @endif
 
-    <div class="table-responsive card rounded-3 p-0 m-0 mt-5">
+    <div class="table-responsive shadow card rounded-3 p-0 m-0 mt-5">
         <table class="table table-bordered rounded-3 border overflow-hidden p-0 m-0">
             <thead>
                 <tr>
@@ -31,7 +31,7 @@
                     <td>{{ $sale->user_name }}</td>
                     <td>{{ $sale->product_name }}</td>
                     <td>{{ $sale->quantity }}</td>
-                    <td>{{ $sale->total }}</td>
+                    <td>{{  'R$ ' . number_format($sale->total, 2, ',', '.') }}</td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm delete-button"
                             data-bs-toggle="tooltip"

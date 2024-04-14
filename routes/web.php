@@ -79,10 +79,9 @@ Route::prefix('site')->group(function () {
 });
 
 Route::prefix('site')->middleware(['auth:web'])->group(function () {
-    Route::get('/logout', [SiteLoginController::class, 'logout'])->name('site.logout');
+    Route::post('/product/{product}/purchase/store', [ProductController::class, 'finalizePurchase'])->name('site.purchase.store');
     Route::get('/product/{product}/purchase', [ProductController::class, 'purchase'])->name('site.product.purchase');
+    Route::get('/user/orders', [UserController::class, 'showUserOrders'])->name('site.user.orders');
+    Route::get('/logout', [SiteLoginController::class, 'logout'])->name('site.logout');
 });
 //Fim Rotas Site
-
-
-
