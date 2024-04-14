@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Admin;
+use App\Models\Sale;
 use App\Models\User;
 
 class DatabaseSeeder extends Seeder
@@ -79,5 +80,20 @@ class DatabaseSeeder extends Seeder
         foreach ($products as $product) {
             Product::updateOrInsert($product);
         }
+
+        Sale::updateOrCreate(
+            [
+                'id' => 1,
+            ],
+            [
+                'id' => 1,
+                'user_id' => 1,
+                'product_id' => 1,
+                'quantity' => 1,
+                'total' => 999.99,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
     }
 }

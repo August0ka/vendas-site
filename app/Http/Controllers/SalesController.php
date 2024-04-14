@@ -9,7 +9,17 @@ class SalesController extends Controller
 {
     public function index()
     {
-        $sales = Sale::all();
+        $sales = Sale::select([
+            'sales.id',
+            'users.name as user_name',
+            'products.name as product_name',
+            'sales.quantity',
+            'sales.total',
+        ])
+            ->join('products', 'sales.product_id', 'products.id')
+            ->join('users', 'sales.user_id', 'users.id')
+            ->get();
+
         return view('admin.sales.index', compact('sales'));
     }
 
@@ -38,8 +48,10 @@ class SalesController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(Sale $sale)
     {
-        //
+        $sale->delete();
+
+        return redirect()->route('sales.index');
     }
 }

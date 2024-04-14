@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <title>Fazer registro</title>
+  <title>Registro</title>
 </head>
 <body>
   <div class="container py-5">
@@ -12,47 +12,58 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
-            Registrar
+           <h4>Registrar</h4> 
           </div>
           <div class="card-body">
             <form method="POST" action="{{ route('site.register.store') }}">
               @csrf
-              <div class="form-group mb-3">
-                <label for="name">Nome</label>
-                <input id="name" type="text" class="form-control" name="name" required autofocus>
+              <div class="row">
+
+                <div class="form-group mb-3 col-6">
+                  <label for="name">Nome</label>
+                  <input id="name" type="text" class="form-control" name="name" required autofocus>
+                </div>
+  
+                <div class="form-group mb-3 col-6">
+                  <label for="cpf">CPF</label>
+                  <input id="cpf" type="text" class="form-control" name="cpf" required autofocus>
+                </div>
               </div>
 
-              <div class="form-group mb-3">
-                <label for="cpf">CPF</label>
-                <input id="cpf" type="text" class="form-control" name="cpf" required autofocus>
-              </div>
+              <div class="row">
 
-              <div class="form-group mb-3">
-                <label for="email">Email</label>
-                <input id="email" type="text" class="form-control" name="email" required>
+                <div class="form-group mb-3 col-6">
+                  <label for="email">Email</label>
+                  <input id="email" type="text" class="form-control" name="email" required>
+                </div>
+  
+                <div class="form-group mb-3 col-6">
+                  <label for="password">Senha</label>
+                  <input id="password" type="text" class="form-control" name="password" required>
+                </div>
               </div>
-
-              <div class="form-group mb-3">
-                <label for="password">Senha</label>
-                <input id="password" type="text" class="form-control" name="password" required>
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="state">Estado</label>
-                <input id="state" type="text" class="form-control" name="state" placeholder="Mato Grosso" required>
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="city">Cidade</label>
-                <input id="city" type="text" class="form-control" name="city" required>
-              </div>
-
               <div class="form-group mb-3">
                 <label for="address">Endereço</label>
                 <input id="address" type="text" class="form-control" name="address" required>
               </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Registrar</button>
+
+              <div class="row">
+                <div class="form-group mb-3 col-8">
+                  <label for="city">Cidade</label>
+                  <input id="city" type="text" class="form-control" name="city" required>
+                </div>
+
+                <div class="form-group mb-3 col-4">
+                  <label for="state">Estado</label>
+                  <input id="state" type="text" class="form-control" name="state" placeholder="Mato Grosso" required>
+                </div>
+  
+              </div>
+
+              <div class="row text-end">
+                <div>
+                  <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
               </div>
             </form>
           </div>
