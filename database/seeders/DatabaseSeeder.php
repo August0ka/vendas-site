@@ -41,9 +41,31 @@ class DatabaseSeeder extends Seeder
             'name' => 'Goku',
             'email' => 'goku@user.com',
             'password' => Hash::make('123'),
+            'cpf' => '12345678900',
+            'address' => 'Rua 1, nº 1',
+            'city' => 'São Paulo',
+            'state' => 'São Paulo',
             'created_at' => now(),
             'updated_at' => now(),
-        ]);    
+        ]);
+
+        User::updateOrCreate(
+        [
+            'id' => 2,
+        ],
+        [
+            'id' => 2,
+            'name' => 'Vegeta',
+            'email' => 'vegeta@user.com',
+            'password' => Hash::make('123'),
+            'cpf' => '98765432100',
+            'address' => 'Rua 2, nº 2',
+            'city' => 'São Paulo',
+            'state' => 'São Paulo',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
 
         $categories = [
             ['name' => 'Eletrônicos'],

@@ -12,9 +12,12 @@ class HomeController extends Controller
     public function index($categoryId = null) {
 
         if($categoryId) {
-            $products = Product::where('category_id', $categoryId)->get();
+            $products = Product::where('category_id', $categoryId)
+                ->where('quantity', '>', 0)
+                ->get();
+           
         } else {
-            $products = Product::all();
+            $products = Product::where('quantity', '>', 0)->get();    
         }
 
         $categories = Category::all();

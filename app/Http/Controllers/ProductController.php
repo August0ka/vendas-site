@@ -137,6 +137,15 @@ class ProductController extends Controller
 
     public function finalizePurchase( Product $product, Request $request) {
         $purchaseDetails = $request->except('_token');
+
+        $productQuantity = Product::find($product->id)->quantity;
+
+        if($productQuantity < $purchaseDetails['quantity']) {
+            return back()->withErrors(['error' => 'Quantidade indisponível em estoque!']);
+        }
+        
+        Product::find($product->id)->decrement('quantity', $purchaseDetails['quantity']);
+
         if($purchaseDetails['total']) {
             $purchaseDetails['total'] = str_replace('R$', '', $purchaseDetails['total']);
             $purchaseDetails['total'] = str_replace(',', '.', $purchaseDetails['total']);

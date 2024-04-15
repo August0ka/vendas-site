@@ -21,7 +21,12 @@
                     <p class="card-text">Descrição: {{ $product->description }}</p>
                     <div class="mb-2 d-flex align-items-center">
                         <label for="infoQuantity" class="form-label me-2">Quantidade:</label>
-                        <input type="number" id="infoQuantity" class="form-control text-center" style="width: 60px;" value="1" min="1">
+                        <input type="number" id="infoQuantity" class="form-control text-center me-2" style="width: 60px;" value="1" min="1">
+                        @if($errors->has('error'))
+                            <span class="invalid-feedback d-block" role="alert">
+                                <strong>{{ $errors->first('error') }}</strong>
+                            </span>
+                        @endif
                     </div>
                     <p class="card-text">Preço unitário: R$ {{ number_format($product->price, 2, ',', '.') }}</p>
                 </div>
