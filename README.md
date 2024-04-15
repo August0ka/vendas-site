@@ -9,6 +9,8 @@ Depois rode:
 
 ```php artisan migrate```
 
+```php artisan key:generate```
+
 ```php artisan db:seed```
 
 Suba o servidor local com: ```php artisan serve```
