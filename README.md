@@ -13,6 +13,8 @@ Depois rode:
 
 ```php artisan key:generate```
 
+```php artisan storage:link```
+
 Suba o servidor local com: ```php artisan serve```
 
 
